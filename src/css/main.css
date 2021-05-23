@@ -175,3 +175,16 @@ body{
     padding: 0.3rem 1rem;
     border-radius: 20px;
 }
+
+@media screen and (max-width: 640px){
+    .displaytodos ul{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-self: center;
+    }
+    
+    .card{
+        margin-right: 0;
+    }    
+}
