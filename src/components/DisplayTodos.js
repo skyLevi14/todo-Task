@@ -26,33 +26,63 @@ const mapDispatchToProps = (dispatch) => {
 
 const DisplayTodos = (props) => {
   const [sort, setSort] = useState("active");
+  const [highlight, sethighlight] = useState({
+    btnSelect: "all",
+    active: false,
+  });
+
+  const registerClick = (event) => {
+    //console.log(event.target.value);
+    const initial = highlight.active.value;
+    sethighlight({
+      btnSelect: event.target.value,
+      active: !initial,
+    });
+  };
+
   return (
     <div className="displaytodos">
       <div className="buttons">
         <motion.button
+          className={highlight.btnSelect === "active" ? "active" : " "}
+          value="active"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => setSort("active")}
+          onClick={(event) => {
+            setSort("active");
+            registerClick(event);
+          }}
         >
           Active
         </motion.button>
         <motion.button
+          className={highlight.btnSelect === "complete" ? "active" : " "}
+          value="complete"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => setSort("completed")}
+          onClick={(event) => {
+            setSort("completed");
+            registerClick(event);
+          }}
         >
           Completed
         </motion.button>
         <motion.button
+          className={highlight.btnSelect === "all" ? "active" : " "}
+          value="all"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => setSort("all")}
+          onClick={(event) => {
+            setSort("all");
+            registerClick(event);
+          }}
         >
           All
         </motion.button>
       </div>
       <ul>
         <AnimatePresence>
+          {/* Show active items */}
           {props.todos.length > 0 && sort === "active"
             ? props.todos.map((item) => {
                 return (
@@ -68,6 +98,7 @@ const DisplayTodos = (props) => {
                 );
               })
             : null}
+
           {/* Show completed items */}
           {props.todos.length > 0 && sort === "completed"
             ? props.todos.map((item) => {
